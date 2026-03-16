@@ -191,13 +191,13 @@
 <body>
 <div class="container">
   <h1>
-    <span>🎓</span> 50 herramientas IA gratuitas
+    <span>🎓</span> 70+ herramientas IA gratuitas
   </h1>
   <div class="subhead">Las mejores IAs para estudiantes · acceso directo · solo versión gratuita</div>
 
   <!-- aviso de filtrado -->
   <div class="note">
-    ⚡ Se han eliminado las herramientas sin plan gratuito (Midjourney, Dreamstudio, Kling AI, etc.) y se han añadido alternativas sin coste. Todos los enlaces llevan a la página oficial.
+    ⚡ Se han eliminado las herramientas sin plan gratuito (Midjourney, Dreamstudio, Kling AI, etc.) y se han añadido alternativas sin coste. Todos los enlaces llevan a la página oficial. ¡Nuevas secciones de Audio y Video!
   </div>
 
   <!-- Generadores de texto -->
@@ -212,11 +212,23 @@
   </div>
   <div class="grid" id="academicGrid"></div>
 
-  <!-- Imagen / vídeo / diseño -->
+  <!-- Imagen / diseño -->
   <div class="section-title">
-    🎨 Imagen y vídeo <span>14 gratis</span>
+    🎨 Imagen y diseño <span>14 gratis</span>
   </div>
   <div class="grid" id="imageGrid"></div>
+
+  <!-- NUEVA SECCIÓN: Audio IA (música, voz, efectos) -->
+  <div class="section-title">
+    🎵 Herramientas de Audio IA <span>8 gratis</span>
+  </div>
+  <div class="grid" id="audioGrid"></div>
+
+  <!-- NUEVA SECCIÓN: Video IA (texto a video, edición) -->
+  <div class="section-title">
+    🎬 Herramientas de Video IA <span>10 gratis</span>
+  </div>
+  <div class="grid" id="videoGrid"></div>
 
   <!-- Repositorios / buscadores de IA -->
   <div class="section-title">
@@ -226,17 +238,13 @@
 
   <footer>
     ✦ 100% enlaces directos · solo herramientas con nivel gratuito (freemium o totalmente gratis) · actualizado 2026 ✦<br>
-    <span style="opacity:0.6;">inspired by the 50 AI tools list — versión ampliada con alternativas libres</span>
+    <span style="opacity:0.6;">inspired by the 70+ AI tools list — versión ampliada con audio y video</span>
   </footer>
 </div>
 
 <script>
   (function() {
     // ----- LISTA COMPLETA (solo gratuitas) -----
-    // Formato: [nombre, url, emoji (como logo), categoria]
-    // Se han quitado las de pago: midjourney, dreamstudio, kling ai, hailluo, ideogram (freemium muy limitado? se deja solo las realmente gratuitas)
-    // Añadidas alternativas gratuitas: Playground AI, Pixlr, Clipdrop, Lexica, Runway (plan gratis), Leonardo (créditos diarios), etc.
-
     const tools = [
       // ---------- TEXTO (originales + añadidas) ----------
       { name: 'Anthropic Claude', url: 'https://claude.ai', emoji: '🤖', cat: 'text' },
@@ -252,51 +260,66 @@
       { name: 'OpenAI ChatGPT', url: 'https://chat.openai.com', emoji: '💬', cat: 'text' },
       { name: 'Perplexity', url: 'https://www.perplexity.ai', emoji: '🔍', cat: 'text' },
       { name: 'QwenLM', url: 'https://chat.qwen.ai', emoji: '🐉', cat: 'text' },
-      { name: 'HuggingChat', url: 'https://huggingface.co/chat', emoji: '🤗', cat: 'text' },      // extra gratuita
-      { name: 'You.com', url: 'https://you.com', emoji: '🌐', cat: 'text' },                     // extra
-      { name: 'Poe', url: 'https://poe.com', emoji: '⚡', cat: 'text' },                          // freemium, tiene nivel gratis
+      { name: 'HuggingChat', url: 'https://huggingface.co/chat', emoji: '🤗', cat: 'text' },
+      { name: 'You.com', url: 'https://you.com', emoji: '🌐', cat: 'text' },
+      { name: 'Poe', url: 'https://poe.com', emoji: '⚡', cat: 'text' },
 
       // ---------- ACADÉMICAS (originales + añadidas) ----------
       { name: 'Brainly', url: 'https://brainly.com', emoji: '🧠', cat: 'acad' },
       { name: 'Connected Papers', url: 'https://www.connectedpapers.com', emoji: '🔗', cat: 'acad' },
       { name: 'Elicit', url: 'https://elicit.com', emoji: '📋', cat: 'acad' },
-      { name: 'Julius', url: 'https://julius.ai', emoji: '📊', cat: 'acad' },                    // versión gratuita limitada
+      { name: 'Julius', url: 'https://julius.ai', emoji: '📊', cat: 'acad' },
       { name: 'Notebook LM', url: 'https://notebooklm.google', emoji: '📓', cat: 'acad' },
-      { name: 'ProofHub', url: 'https://www.proofhub.com', emoji: '✅', cat: 'acad' },            // más de gestión, pero gratuito?
-      { name: 'Quillbot', url: 'https://quillbot.com', emoji: '✂️', cat: 'acad' },               // freemium
+      { name: 'ProofHub', url: 'https://www.proofhub.com', emoji: '✅', cat: 'acad' },
+      { name: 'Quillbot', url: 'https://quillbot.com', emoji: '✂️', cat: 'acad' },
       { name: 'Research Rabbit', url: 'https://www.researchrabbit.ai', emoji: '🐇', cat: 'acad' },
       { name: 'Scinapse', url: 'https://www.scinapse.io', emoji: '🔬', cat: 'acad' },
       { name: 'SciSpace', url: 'https://typeset.io', emoji: '📄', cat: 'acad' },
       { name: 'Scite', url: 'https://scite.ai', emoji: '📌', cat: 'acad' },
-      { name: 'WolframAlpha', url: 'https://www.wolframalpha.com', emoji: '📐', cat: 'acad' },   // gratis limitado
-      { name: 'Zotero', url: 'https://www.zotero.org', emoji: '📚', cat: 'acad' },               // extra gratuito
-      // añadidas gratuitas para estudiantes
-      { name: 'Grammarly', url: 'https://grammarly.com', emoji: '🖋️', cat: 'acad' },             // plan gratis
+      { name: 'WolframAlpha', url: 'https://www.wolframalpha.com', emoji: '📐', cat: 'acad' },
+      { name: 'Zotero', url: 'https://www.zotero.org', emoji: '📚', cat: 'acad' },
+      { name: 'Grammarly', url: 'https://grammarly.com', emoji: '🖋️', cat: 'acad' },
       { name: 'Open Knowledge Maps', url: 'https://openknowledgemaps.org', emoji: '🗺️', cat: 'acad' },
 
-      // ---------- IMAGEN / VÍDEO (filtradas solo gratuitas / freemium decente) ----------
+      // ---------- IMAGEN / DISEÑO (filtradas solo gratuitas) ----------
       { name: 'Civit AI', url: 'https://civitai.com', emoji: '🖼️', cat: 'image' },
       { name: 'Craiyon', url: 'https://www.craiyon.com', emoji: '🎨', cat: 'image' },
-      // Dreamstudio (pago) → eliminado
-      { name: 'Google Imagen 3', url: 'https://deepmind.google/technologies/imagen-3/', emoji: '🌈', cat: 'image' }, // acceso via labs?
-      { name: 'Hailluo AI', url: 'https://www.hailluo.com', emoji: '☀️', cat: 'image' },          // se deja, pero verificar
-      { name: 'Ideogram', url: 'https://ideogram.ai', emoji: '🖍️', cat: 'image' },                // gratis con cola
-      // Kling AI (de pago?) -> eliminado
-      { name: 'Leonardo AI', url: 'https://leonardo.ai', emoji: '🎭', cat: 'image' },             // créditos diarios gratis
-      // Midjourney (pago) -> no
+      { name: 'Google Imagen 3', url: 'https://deepmind.google/technologies/imagen-3/', emoji: '🌈', cat: 'image' },
+      { name: 'Ideogram', url: 'https://ideogram.ai', emoji: '🖍️', cat: 'image' },
+      { name: 'Leonardo AI', url: 'https://leonardo.ai', emoji: '🎭', cat: 'image' },
       { name: 'MS Designer', url: 'https://designer.microsoft.com', emoji: '🖌️', cat: 'image' },
-      { name: 'DALL·E 2', url: 'https://labs.openai.com', emoji: '🎰', cat: 'image' },            // créditos gratis
+      { name: 'DALL·E 2', url: 'https://labs.openai.com', emoji: '🎰', cat: 'image' },
       { name: 'Pixelcut', url: 'https://www.pixelcut.ai', emoji: '📸', cat: 'image' },
       { name: 'Recraft', url: 'https://recraft.ai', emoji: '🪄', cat: 'image' },
-      // añadidas gratuitas de imagen/video
       { name: 'Playground AI', url: 'https://playgroundai.com', emoji: '🛝', cat: 'image' },
       { name: 'Lexica', url: 'https://lexica.art', emoji: '🌀', cat: 'image' },
       { name: 'Clipdrop', url: 'https://clipdrop.co', emoji: '📎', cat: 'image' },
-      { name: 'RunwayML', url: 'https://runwayml.com', emoji: '🎬', cat: 'image' },               // plan gratis
       { name: 'Pixlr', url: 'https://pixlr.com', emoji: '🖼️', cat: 'image' },
-      { name: 'Canva', url: 'https://canva.com', emoji: '🖍️', cat: 'image' },                    // gratis
+      { name: 'Canva', url: 'https://canva.com', emoji: '🖍️', cat: 'image' },
 
-      // ---------- DIRECTORIOS / REPOSITORIOS (todos gratuitos) ----------
+      // ---------- NUEVA SECCIÓN: AUDIO IA (música, voz, TTS) ----------
+      { name: 'Suno AI', url: 'https://suno.ai', emoji: '🎵', cat: 'audio' },
+      { name: 'MiniMax Audio', url: 'https://www.minimax.io/audio/text-to-speech/french/es', emoji: '🔊', cat: 'audio' },
+      { name: 'Mubert', url: 'https://mubert.com', emoji: '🎧', cat: 'audio' },
+      { name: 'ElevenLabs', url: 'https://elevenlabs.io', emoji: '🗣️', cat: 'audio' },
+      { name: 'AIVA', url: 'https://aiva.ai', emoji: '🎼', cat: 'audio' },
+      { name: 'Soundraw', url: 'https://soundraw.io', emoji: '🎹', cat: 'audio' },
+      { name: 'Boomy', url: 'https://boomy.com', emoji: '🤘', cat: 'audio' },
+      { name: 'Loudly', url: 'https://www.loudly.com', emoji: '🔊', cat: 'audio' },
+
+      // ---------- NUEVA SECCIÓN: VIDEO IA (texto a video, edición) ----------
+      { name: 'MyEdit Video', url: 'https://myedit.com/video-editor', emoji: '🎬', cat: 'video' },
+      { name: 'RunwayML', url: 'https://runwayml.com', emoji: '🎥', cat: 'video' },
+      { name: 'CapCut', url: 'https://www.capcut.com', emoji: '✂️', cat: 'video' },
+      { name: 'InVideo AI', url: 'https://invideo.io', emoji: '📽️', cat: 'video' },
+      { name: 'Pika Labs', url: 'https://pika.art', emoji: '⚡', cat: 'video' },
+      { name: 'HeyGen', url: 'https://www.heygen.com', emoji: '👤', cat: 'video' },
+      { name: 'Synthesia', url: 'https://www.synthesia.io', emoji: '🎞️', cat: 'video' },
+      { name: 'FlexClip', url: 'https://www.flexclip.com', emoji: '📹', cat: 'video' },
+      { name: 'VEED.io', url: 'https://www.veed.io', emoji: '🎚️', cat: 'video' },
+      { name: 'Animaker', url: 'https://www.animaker.com', emoji: '🎭', cat: 'video' },
+
+      // ---------- DIRECTORIOS / REPOSITORIOS ----------
       { name: 'Aifindy', url: 'https://aifindy.com', emoji: '📂', cat: 'dir' },
       { name: 'AllThingsAI', url: 'https://allthingsai.com', emoji: '🤖', cat: 'dir' },
       { name: 'Creatai', url: 'https://creatai.ai', emoji: '✨', cat: 'dir' },
@@ -306,20 +329,18 @@
       { name: 'Opentools', url: 'https://opentools.ai', emoji: '🔓', cat: 'dir' },
       { name: 'The AI Library', url: 'https://theailibrary.com', emoji: '📘', cat: 'dir' },
       { name: 'TAAFT', url: 'https://taaft.co', emoji: '🗂️', cat: 'dir' },
-      { name: 'LM Arena', url: 'https://lmarena.ai', emoji: '🏟️', cat: 'dir' }                  // extra (chatbot arena)
+      { name: 'LM Arena', url: 'https://lmarena.ai', emoji: '🏟️', cat: 'dir' }
     ];
 
-    // === FILTRADO extra de pago? asegurar sólo gratuitas conocidas (no se incluyen Midjourney, etc.) 
-    // ya se hizo manual, pero por las dudas excluyo nombres que pudieran colarse
-    const excludeList = ['midjourney', 'dreamstudio', 'kling ai', 'hailluo']; // hailluo es gratis? lo dejamos
+    // Lista de exclusión por si acaso
+    const excludeList = ['midjourney', 'dreamstudio', 'kling ai'];
 
-    // función para crear tarjetas
     function renderGrid(categoryId, catCode) {
       const container = document.getElementById(categoryId);
       if (!container) return;
       const filtered = tools.filter(t => t.cat === catCode && !excludeList.some(ex => t.name.toLowerCase().includes(ex)));
-      // orden alfabético
       filtered.sort((a,b) => a.name.localeCompare(b.name));
+      
       filtered.forEach(tool => {
         const card = document.createElement('div');
         card.className = 'card';
@@ -350,17 +371,14 @@
       });
     }
 
-    // llenar las cuatro secciones
+    // Renderizar todas las secciones
     renderGrid('textGrid', 'text');
     renderGrid('academicGrid', 'acad');
     renderGrid('imageGrid', 'image');
+    renderGrid('audioGrid', 'audio');
+    renderGrid('videoGrid', 'video');
     renderGrid('directoryGrid', 'dir');
-
-    // añadimos algunas extras para redondear a ~50 (ya hay más de 50, pero se ve bien)
-    // si alguien quiere comprobar: sumar longitudes
   })();
 </script>
-
-<!-- pequeña corrección para los grids vacíos en directorio si hay pocos, pero tenemos suficientes -->
 </body>
 </html>
