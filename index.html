@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IA gratuitas · herramientas para estudiantes</title>
+  <title>AI Toolkit Pro · herramientas inteligentes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -11,374 +14,706 @@
       box-sizing: border-box;
     }
 
+    /* Variables para temas */
+    :root {
+      --bg-primary: #0c0f1e;
+      --bg-secondary: #1a1f35;
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --card-bg: rgba(20, 25, 45, 0.6);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --accent-primary: #3b82f6;
+      --accent-secondary: #8b5cf6;
+      --favorite: #fbbf24;
+    }
+
+    body.light-theme {
+      --bg-primary: #f0f5ff;
+      --bg-secondary: #d9e6ff;
+      --text-primary: #172b4d;
+      --text-secondary: #2c3e6d;
+      --card-bg: rgba(255, 255, 255, 0.8);
+      --card-border: rgba(59, 130, 246, 0.2);
+    }
+
     body {
-      background: #f6f9fe;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      padding: 2rem 1.5rem;
-      color: #172b4d;
+      background: var(--bg-primary);
+      font-family: 'Outfit', sans-serif;
+      padding: 1.5rem;
+      color: var(--text-primary);
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+      position: relative;
+    }
+
+    /* Fondo dinámico */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+        linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      z-index: -2;
+      transition: background 0.3s;
     }
 
     .container {
       max-width: 1400px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header con controles */
+    .header {
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .header-left {
+      flex: 1;
+    }
+
+    .badge {
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 1rem;
     }
 
     h1 {
-      font-size: 2.8rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      background: linear-gradient(145deg, #0b2b5c, #1d4a8b);
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fff 0%, #a5b4fc 50%, #38bdf8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.4rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      margin-bottom: 0.5rem;
     }
 
     .subhead {
       font-size: 1.2rem;
-      color: #2c3e6d;
-      margin-bottom: 2.5rem;
-      border-left: 5px solid #3b82f6;
-      padding-left: 1.2rem;
-      background: rgba(59,130,246,0.04);
-      border-radius: 0 12px 12px 0;
+      color: var(--text-secondary);
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1.2rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(2px);
-      border: 1px solid rgba(255,255,255,0.6);
-      border-radius: 28px;
-      padding: 1.5rem 0.8rem 0.9rem 0.8rem;
-      box-shadow: 0 8px 20px rgba(0,20,50,0.04), 0 2px 6px rgba(0,0,0,0.02);
-      transition: transform 0.15s ease, box-shadow 0.25s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 28px -8px rgba(0,55,120,0.15);
-      background: white;
-      border-color: #d4e2ff;
-    }
-
-    .logo {
-      width: 64px;
-      height: 64px;
-      border-radius: 20px;
-      background: white;
+    /* Barra de herramientas */
+    .toolbar {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 60px;
+      padding: 0.5rem;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 2.2rem;
-      font-weight: 600;
-      margin-bottom: 12px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.02);
-      border: 1px solid #eef4ff;
-      transition: 0.1s;
-      color: #1e293b;
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
-    .logo span {
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-    }
-
-    .card h3 {
-      font-size: 1.06rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-
-    .badge {
-      font-size: 0.7rem;
-      background: #e1ecfe;
-      color: #194a7a;
-      padding: 0.2rem 0.9rem;
-      border-radius: 40px;
-      font-weight: 500;
-      display: inline-block;
-      margin: 8px 0 6px;
-    }
-
-    .btn {
-      background: #0b2b5c;
-      color: white;
+    .toolbar-btn {
+      background: transparent;
       border: none;
-      width: 90%;
-      padding: 0.5rem 0;
+      color: var(--text-secondary);
+      padding: 0.7rem 1.2rem;
       border-radius: 40px;
-      font-size: 0.85rem;
-      font-weight: 500;
       cursor: pointer;
-      transition: background 0.15s;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 6px;
-      border: 1px solid #0b2b5c;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
     }
 
-    .btn:hover {
-      background: #1d4a8b;
-      border-color: #1d4a8b;
+    .toolbar-btn:hover {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--text-primary);
     }
 
-    .gratis-tag {
-      background: #dcfce7;
-      color: #15803d;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.2rem 0.9rem;
-      border-radius: 30px;
-      margin-top: 6px;
+    .toolbar-btn.active {
+      background: #3b82f6;
+      color: white;
     }
 
-    .section-title {
-      font-size: 1.8rem;
-      font-weight: 600;
-      margin: 2.8rem 0 1.2rem 0;
+    /* Buscador */
+    .search-section {
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 60px;
+      padding: 0.8rem 1.5rem;
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .section-title span {
+    .search-box input {
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1rem;
+      width: 100%;
+      outline: none;
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.5;
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 40px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text-secondary);
+    }
+
+    .chip:hover {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--text-primary);
+    }
+
+    .chip.active {
       background: #3b82f6;
       color: white;
-      font-size: 1rem;
-      padding: 0.2rem 1rem;
+      border-color: #3b82f6;
+    }
+
+    /* Vista compacta/amplia */
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s;
+    }
+
+    .grid.compact {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+
+    .grid.normal {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    .grid.wide {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    /* Cards interactivas */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 1.5rem 1rem 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(59, 130, 246, 0.3);
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card.favorite {
+      border-color: var(--favorite);
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .favorite-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      padding: 4px;
+    }
+
+    .favorite-btn.active {
+      color: var(--favorite);
+      transform: scale(1.1);
+    }
+
+    .card-body {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .category-tag {
+      display: inline-block;
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin: 8px 0;
+    }
+
+    .category-tag.text { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+    .category-tag.acad { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+    .category-tag.image { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; }
+    .category-tag.audio { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+    .category-tag.video { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+    .category-tag.dir { background: rgba(107, 114, 128, 0.2); color: #d1d5db; }
+
+    .tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      z-index: 100;
+    }
+
+    .card:hover .tooltip {
+      opacity: 1;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .btn {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 0.7rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 1rem;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background: #2563eb;
+      transform: scale(1.02);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 12px 24px;
       border-radius: 60px;
+      font-size: 0.9rem;
+      z-index: 9999;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
     }
 
     footer {
       margin-top: 4rem;
       text-align: center;
-      color: #5e6f8d;
+      color: var(--text-secondary);
       font-size: 0.9rem;
-      border-top: 1px solid #cddffb;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       padding-top: 2rem;
     }
 
-    .note {
-      background: #e8f0fe;
-      border-radius: 24px;
-      padding: 1rem 1.8rem;
-      margin: 1.8rem 0;
-      font-size: 0.95rem;
-      color: #014485;
-      display: inline-block;
-    }
-
-    a {
-      text-decoration: none;
-      color: white;
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.5rem; }
+      .header { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 <div class="container">
-  <h1>
-    <span>🎓</span> 70+ herramientas IA gratuitas
-  </h1>
-  <div class="subhead">Las mejores IAs para estudiantes · acceso directo · solo versión gratuita</div>
-
-  <!-- aviso de filtrado -->
-  <div class="note">
-    ⚡ Se han eliminado las herramientas sin plan gratuito (Midjourney, Dreamstudio, Kling AI, etc.) y se han añadido alternativas sin coste. Todos los enlaces llevan a la página oficial. ¡Nuevas secciones de Audio y Video!
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="badge">
+        <span>✨</span> Actualizado 2026 · 70+ herramientas
+      </div>
+      <h1>AI Toolkit Pro</h1>
+      <div class="subhead">Las mejores IAs gratuitas para estudiantes · selección premium</div>
+    </div>
+    
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <button class="toolbar-btn" onclick="toggleTheme()">
+        <span>🌓</span> Tema
+      </button>
+      <button class="toolbar-btn" onclick="showFavorites()" id="favFilterBtn">
+        <span>⭐</span> Favoritos
+      </button>
+      <div class="toolbar-btn" style="gap: 2px;">
+        <span>📏</span>
+        <select onchange="changeView(this.value)" style="background: transparent; border: none; color: inherit; outline: none;">
+          <option value="compact">Compacto</option>
+          <option value="normal" selected>Normal</option>
+          <option value="wide">Amplio</option>
+        </select>
+      </div>
+    </div>
   </div>
 
-  <!-- Generadores de texto -->
-  <div class="section-title">
-    📝 Generadores de texto <span>16 gratis</span>
+  <!-- Buscador y filtros -->
+  <div class="search-section">
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" placeholder="Buscar herramientas..." id="searchInput" oninput="filterTools()">
+    </div>
+    <div class="filter-chips" id="categoryFilters">
+      <span class="chip active" onclick="filterByCategory('all')">📋 Todas</span>
+      <span class="chip" onclick="filterByCategory('text')">📝 Texto</span>
+      <span class="chip" onclick="filterByCategory('acad')">📚 Académicas</span>
+      <span class="chip" onclick="filterByCategory('image')">🎨 Imagen</span>
+      <span class="chip" onclick="filterByCategory('audio')">🎵 Audio</span>
+      <span class="chip" onclick="filterByCategory('video')">🎬 Video</span>
+      <span class="chip" onclick="filterByCategory('dir')">🗂️ Directorios</span>
+    </div>
   </div>
-  <div class="grid" id="textGrid"></div>
 
-  <!-- Herramientas académicas / research -->
-  <div class="section-title">
-    📚 Contexto académico <span>13 gratis</span>
-  </div>
-  <div class="grid" id="academicGrid"></div>
+  <!-- Grid de herramientas -->
+  <div class="grid normal" id="toolsGrid"></div>
 
-  <!-- Imagen / diseño -->
-  <div class="section-title">
-    🎨 Imagen y diseño <span>14 gratis</span>
-  </div>
-  <div class="grid" id="imageGrid"></div>
-
-  <!-- NUEVA SECCIÓN: Audio IA (música, voz, efectos) -->
-  <div class="section-title">
-    🎵 Herramientas de Audio IA <span>8 gratis</span>
-  </div>
-  <div class="grid" id="audioGrid"></div>
-
-  <!-- NUEVA SECCIÓN: Video IA (texto a video, edición) -->
-  <div class="section-title">
-    🎬 Herramientas de Video IA <span>10 gratis</span>
-  </div>
-  <div class="grid" id="videoGrid"></div>
-
-  <!-- Repositorios / buscadores de IA -->
-  <div class="section-title">
-    🧭 Directorios + útiles <span>9 gratis</span>
-  </div>
-  <div class="grid" id="directoryGrid"></div>
-
+  <!-- Footer stats -->
   <footer>
-    ✦ 100% enlaces directos · solo herramientas con nivel gratuito (freemium o totalmente gratis) · actualizado 2026 ✦<br>
-    <span style="opacity:0.6;">inspired by the 70+ AI tools list — versión ampliada con audio y video</span>
+    <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
+      <span>📊 <span id="totalCount">70</span> herramientas</span>
+      <span>⭐ <span id="favoriteCount">0</span> favoritas</span>
+      <span>🎓 100% gratuitas</span>
+    </div>
+    ✦ Enlaces directos · solo herramientas con nivel gratuito · actualizado 2026 ✦
   </footer>
 </div>
 
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
 <script>
-  (function() {
-    // ----- LISTA COMPLETA (solo gratuitas) -----
-    const tools = [
-      // ---------- TEXTO (originales + añadidas) ----------
-      { name: 'Anthropic Claude', url: 'https://claude.ai', emoji: '🤖', cat: 'text' },
-      { name: 'Blackbox', url: 'https://www.blackbox.ai', emoji: '⬛', cat: 'text' },
-      { name: 'Character AI', url: 'https://character.ai', emoji: '🎭', cat: 'text' },
-      { name: 'DeepSeek', url: 'https://chat.deepseek.com', emoji: '🔎', cat: 'text' },
-      { name: 'Google Gemini', url: 'https://gemini.google.com', emoji: '✨', cat: 'text' },
-      { name: 'Kimi AI', url: 'https://kimi.moonshot.cn', emoji: '🌙', cat: 'text' },
-      { name: 'Liner', url: 'https://liner.ai', emoji: '📏', cat: 'text' },
-      { name: 'Meta AI', url: 'https://www.meta.ai', emoji: '🌀', cat: 'text' },
-      { name: 'Mistral AI', url: 'https://chat.mistral.ai', emoji: '🌬️', cat: 'text' },
-      { name: 'MS Copilot', url: 'https://copilot.microsoft.com', emoji: '🪁', cat: 'text' },
-      { name: 'OpenAI ChatGPT', url: 'https://chat.openai.com', emoji: '💬', cat: 'text' },
-      { name: 'Perplexity', url: 'https://www.perplexity.ai', emoji: '🔍', cat: 'text' },
-      { name: 'QwenLM', url: 'https://chat.qwen.ai', emoji: '🐉', cat: 'text' },
-      { name: 'HuggingChat', url: 'https://huggingface.co/chat', emoji: '🤗', cat: 'text' },
-      { name: 'You.com', url: 'https://you.com', emoji: '🌐', cat: 'text' },
-      { name: 'Poe', url: 'https://poe.com', emoji: '⚡', cat: 'text' },
+  // Base de datos de herramientas con descripciones
+  const tools = [
+    // Texto
+    { name: 'Anthropic Claude', url: 'https://claude.ai', emoji: '🤖', cat: 'text', desc: 'Asistente IA con contexto extenso y razonamiento profundo' },
+    { name: 'DeepSeek', url: 'https://chat.deepseek.com', emoji: '🔎', cat: 'text', desc: 'Modelo chino potente, gratuito y con buena capacidad de código' },
+    { name: 'Google Gemini', url: 'https://gemini.google.com', emoji: '✨', cat: 'text', desc: 'IA multimodal de Google, integrada con Workspace' },
+    { name: 'OpenAI ChatGPT', url: 'https://chat.openai.com', emoji: '💬', cat: 'text', desc: 'El original, versátil para todo tipo de tareas' },
+    { name: 'Perplexity', url: 'https://www.perplexity.ai', emoji: '🔍', cat: 'text', desc: 'Buscador conversacional con fuentes en tiempo real' },
+    { name: 'Mistral AI', url: 'https://chat.mistral.ai', emoji: '🌬️', cat: 'text', desc: 'Modelo europeo eficiente y open-source' },
+    { name: 'MS Copilot', url: 'https://copilot.microsoft.com', emoji: '🪁', cat: 'text', desc: 'Asistente de Microsoft con búsqueda web' },
+    { name: 'Character AI', url: 'https://character.ai', emoji: '🎭', cat: 'text', desc: 'Chat con personajes y personalidades diversas' },
+    { name: 'QwenLM', url: 'https://chat.qwen.ai', emoji: '🐉', cat: 'text', desc: 'Modelo de Alibaba, bueno para contenido en español' },
+    { name: 'HuggingChat', url: 'https://huggingface.co/chat', emoji: '🤗', cat: 'text', desc: 'Chat open-source de Hugging Face' },
+    { name: 'Kimi AI', url: 'https://kimi.moonshot.cn', emoji: '🌙', cat: 'text', desc: 'IA china con gran capacidad para documentos largos' },
+    { name: 'Blackbox', url: 'https://www.blackbox.ai', emoji: '⬛', cat: 'text', desc: 'Enfocada en código y desarrollo' },
+    { name: 'Liner', url: 'https://liner.ai', emoji: '📏', cat: 'text', desc: 'Asistente para investigación y productividad' },
+    { name: 'You.com', url: 'https://you.com', emoji: '🌐', cat: 'text', desc: 'Buscador con IA integrada y apps' },
+    { name: 'Poe', url: 'https://poe.com', emoji: '⚡', cat: 'text', desc: 'Plataforma con múltiples bots en un solo lugar' },
+    { name: 'Meta AI', url: 'https://www.meta.ai', emoji: '🌀', cat: 'text', desc: 'IA de Meta, integrada en WhatsApp, Instagram' },
 
-      // ---------- ACADÉMICAS (originales + añadidas) ----------
-      { name: 'Brainly', url: 'https://brainly.com', emoji: '🧠', cat: 'acad' },
-      { name: 'Connected Papers', url: 'https://www.connectedpapers.com', emoji: '🔗', cat: 'acad' },
-      { name: 'Elicit', url: 'https://elicit.com', emoji: '📋', cat: 'acad' },
-      { name: 'Julius', url: 'https://julius.ai', emoji: '📊', cat: 'acad' },
-      { name: 'Notebook LM', url: 'https://notebooklm.google', emoji: '📓', cat: 'acad' },
-      { name: 'ProofHub', url: 'https://www.proofhub.com', emoji: '✅', cat: 'acad' },
-      { name: 'Quillbot', url: 'https://quillbot.com', emoji: '✂️', cat: 'acad' },
-      { name: 'Research Rabbit', url: 'https://www.researchrabbit.ai', emoji: '🐇', cat: 'acad' },
-      { name: 'Scinapse', url: 'https://www.scinapse.io', emoji: '🔬', cat: 'acad' },
-      { name: 'SciSpace', url: 'https://typeset.io', emoji: '📄', cat: 'acad' },
-      { name: 'Scite', url: 'https://scite.ai', emoji: '📌', cat: 'acad' },
-      { name: 'WolframAlpha', url: 'https://www.wolframalpha.com', emoji: '📐', cat: 'acad' },
-      { name: 'Zotero', url: 'https://www.zotero.org', emoji: '📚', cat: 'acad' },
-      { name: 'Grammarly', url: 'https://grammarly.com', emoji: '🖋️', cat: 'acad' },
-      { name: 'Open Knowledge Maps', url: 'https://openknowledgemaps.org', emoji: '🗺️', cat: 'acad' },
+    // Académicas
+    { name: 'Elicit', url: 'https://elicit.com', emoji: '📋', cat: 'acad', desc: 'Buscador de papers académicos con resúmenes' },
+    { name: 'SciSpace', url: 'https://typeset.io', emoji: '📄', cat: 'acad', desc: 'Explica papers científicos de forma sencilla' },
+    { name: 'Connected Papers', url: 'https://www.connectedpapers.com', emoji: '🔗', cat: 'acad', desc: 'Mapa visual de relaciones entre papers' },
+    { name: 'Research Rabbit', url: 'https://www.researchrabbit.ai', emoji: '🐇', cat: 'acad', desc: 'Descubre papers relacionados visualmente' },
+    { name: 'Scite', url: 'https://scite.ai', emoji: '📌', cat: 'acad', desc: 'Muestra cómo otros papers han citado un trabajo' },
+    { name: 'Notebook LM', url: 'https://notebooklm.google', emoji: '📓', cat: 'acad', desc: 'Toma notas con IA sobre tus documentos' },
+    { name: 'WolframAlpha', url: 'https://www.wolframalpha.com', emoji: '📐', cat: 'acad', desc: 'Motor de conocimiento computacional' },
+    { name: 'Quillbot', url: 'https://quillbot.com', emoji: '✂️', cat: 'acad', desc: 'Parafrasea y resume textos' },
+    { name: 'Grammarly', url: 'https://grammarly.com', emoji: '🖋️', cat: 'acad', desc: 'Corrector de gramática y estilo' },
+    { name: 'Zotero', url: 'https://www.zotero.org', emoji: '📚', cat: 'acad', desc: 'Gestor de referencias bibliográficas' },
+    { name: 'Brainly', url: 'https://brainly.com', emoji: '🧠', cat: 'acad', desc: 'Red social de ayuda con tareas' },
+    { name: 'Julius', url: 'https://julius.ai', emoji: '📊', cat: 'acad', desc: 'Analiza datos y crea visualizaciones' },
+    { name: 'Scinapse', url: 'https://www.scinapse.io', emoji: '🔬', cat: 'acad', desc: 'Buscador académico rápido' },
+    { name: 'Open Knowledge Maps', url: 'https://openknowledgemaps.org', emoji: '🗺️', cat: 'acad', desc: 'Mapas visuales de conocimiento' },
+    { name: 'ProofHub', url: 'https://www.proofhub.com', emoji: '✅', cat: 'acad', desc: 'Revisión de pruebas y trabajos' },
 
-      // ---------- IMAGEN / DISEÑO (filtradas solo gratuitas) ----------
-      { name: 'Civit AI', url: 'https://civitai.com', emoji: '🖼️', cat: 'image' },
-      { name: 'Craiyon', url: 'https://www.craiyon.com', emoji: '🎨', cat: 'image' },
-      { name: 'Google Imagen 3', url: 'https://deepmind.google/technologies/imagen-3/', emoji: '🌈', cat: 'image' },
-      { name: 'Ideogram', url: 'https://ideogram.ai', emoji: '🖍️', cat: 'image' },
-      { name: 'Leonardo AI', url: 'https://leonardo.ai', emoji: '🎭', cat: 'image' },
-      { name: 'MS Designer', url: 'https://designer.microsoft.com', emoji: '🖌️', cat: 'image' },
-      { name: 'DALL·E 2', url: 'https://labs.openai.com', emoji: '🎰', cat: 'image' },
-      { name: 'Pixelcut', url: 'https://www.pixelcut.ai', emoji: '📸', cat: 'image' },
-      { name: 'Recraft', url: 'https://recraft.ai', emoji: '🪄', cat: 'image' },
-      { name: 'Playground AI', url: 'https://playgroundai.com', emoji: '🛝', cat: 'image' },
-      { name: 'Lexica', url: 'https://lexica.art', emoji: '🌀', cat: 'image' },
-      { name: 'Clipdrop', url: 'https://clipdrop.co', emoji: '📎', cat: 'image' },
-      { name: 'Pixlr', url: 'https://pixlr.com', emoji: '🖼️', cat: 'image' },
-      { name: 'Canva', url: 'https://canva.com', emoji: '🖍️', cat: 'image' },
+    // Imagen
+    { name: 'Leonardo AI', url: 'https://leonardo.ai', emoji: '🎭', cat: 'image', desc: 'Generación de imágenes de alta calidad' },
+    { name: 'Ideogram', url: 'https://ideogram.ai', emoji: '🖍️', cat: 'image', desc: 'Excelente para texto dentro de imágenes' },
+    { name: 'Playground AI', url: 'https://playgroundai.com', emoji: '🛝', cat: 'image', desc: 'Editor y generador de imágenes versátil' },
+    { name: 'DALL·E 2', url: 'https://labs.openai.com', emoji: '🎰', cat: 'image', desc: 'El clásico de OpenAI para imágenes' },
+    { name: 'Google Imagen 3', url: 'https://deepmind.google/technologies/imagen-3/', emoji: '🌈', cat: 'image', desc: 'Lo último de Google en generación de imágenes' },
+    { name: 'MS Designer', url: 'https://designer.microsoft.com', emoji: '🖌️', cat: 'image', desc: 'Diseño asistido por IA de Microsoft' },
+    { name: 'Canva', url: 'https://canva.com', emoji: '🖍️', cat: 'image', desc: 'Diseño gráfico con funciones IA' },
+    { name: 'Pixlr', url: 'https://pixlr.com', emoji: '🖼️', cat: 'image', desc: 'Editor de fotos online con IA' },
+    { name: 'Clipdrop', url: 'https://clipdrop.co', emoji: '📎', cat: 'image', desc: 'Herramientas de edición por Stability AI' },
+    { name: 'Lexica', url: 'https://lexica.art', emoji: '🌀', cat: 'image', desc: 'Buscador y generador de imágenes' },
+    { name: 'Recraft', url: 'https://recraft.ai', emoji: '🪄', cat: 'image', desc: 'Genera iconos e ilustraciones vectoriales' },
+    { name: 'Pixelcut', url: 'https://www.pixelcut.ai', emoji: '📸', cat: 'image', desc: 'Edita fotos de producto con IA' },
+    { name: 'Civit AI', url: 'https://civitai.com', emoji: '🖼️', cat: 'image', desc: 'Comunidad de modelos Stable Diffusion' },
+    { name: 'Craiyon', url: 'https://www.craiyon.com', emoji: '🎨', cat: 'image', desc: 'Generador gratuito sin restricciones' },
 
-      // ---------- NUEVA SECCIÓN: AUDIO IA (música, voz, TTS) ----------
-      { name: 'Suno AI', url: 'https://suno.ai', emoji: '🎵', cat: 'audio' },
-      { name: 'MiniMax Audio', url: 'https://www.minimax.io/audio/text-to-speech/french/es', emoji: '🔊', cat: 'audio' },
-      { name: 'Mubert', url: 'https://mubert.com', emoji: '🎧', cat: 'audio' },
-      { name: 'ElevenLabs', url: 'https://elevenlabs.io', emoji: '🗣️', cat: 'audio' },
-      { name: 'AIVA', url: 'https://aiva.ai', emoji: '🎼', cat: 'audio' },
-      { name: 'Soundraw', url: 'https://soundraw.io', emoji: '🎹', cat: 'audio' },
-      { name: 'Boomy', url: 'https://boomy.com', emoji: '🤘', cat: 'audio' },
-      { name: 'Loudly', url: 'https://www.loudly.com', emoji: '🔊', cat: 'audio' },
+    // Audio
+    { name: 'Suno AI', url: 'https://suno.ai', emoji: '🎵', cat: 'audio', desc: 'Crea música a partir de texto' },
+    { name: 'ElevenLabs', url: 'https://elevenlabs.io', emoji: '🗣️', cat: 'audio', desc: 'Voces sintéticas hiperrealistas' },
+    { name: 'AIVA', url: 'https://aiva.ai', emoji: '🎼', cat: 'audio', desc: 'Composición musical con IA' },
+    { name: 'Mubert', url: 'https://mubert.com', emoji: '🎧', cat: 'audio', desc: 'Música electrónica generativa' },
+    { name: 'Soundraw', url: 'https://soundraw.io', emoji: '🎹', cat: 'audio', desc: 'Crea y personaliza música libre de derechos' },
+    { name: 'Boomy', url: 'https://boomy.com', emoji: '🤘', cat: 'audio', desc: 'Crea canciones en segundos' },
+    { name: 'Loudly', url: 'https://www.loudly.com', emoji: '🔊', cat: 'audio', desc: 'Plataforma de música con IA' },
+    { name: 'MiniMax Audio', url: 'https://www.minimax.io/audio/text-to-speech/french/es', emoji: '🔊', cat: 'audio', desc: 'Texto a voz en múltiples idiomas' },
 
-      // ---------- NUEVA SECCIÓN: VIDEO IA (texto a video, edición) ----------
-      { name: 'MyEdit Video', url: 'https://myedit.com/video-editor', emoji: '🎬', cat: 'video' },
-      { name: 'RunwayML', url: 'https://runwayml.com', emoji: '🎥', cat: 'video' },
-      { name: 'CapCut', url: 'https://www.capcut.com', emoji: '✂️', cat: 'video' },
-      { name: 'InVideo AI', url: 'https://invideo.io', emoji: '📽️', cat: 'video' },
-      { name: 'Pika Labs', url: 'https://pika.art', emoji: '⚡', cat: 'video' },
-      { name: 'HeyGen', url: 'https://www.heygen.com', emoji: '👤', cat: 'video' },
-      { name: 'Synthesia', url: 'https://www.synthesia.io', emoji: '🎞️', cat: 'video' },
-      { name: 'FlexClip', url: 'https://www.flexclip.com', emoji: '📹', cat: 'video' },
-      { name: 'VEED.io', url: 'https://www.veed.io', emoji: '🎚️', cat: 'video' },
-      { name: 'Animaker', url: 'https://www.animaker.com', emoji: '🎭', cat: 'video' },
+    // Video
+    { name: 'RunwayML', url: 'https://runwayml.com', emoji: '🎥', cat: 'video', desc: 'Edición y generación de video con IA' },
+    { name: 'CapCut', url: 'https://www.capcut.com', emoji: '✂️', cat: 'video', desc: 'Editor de video con muchas funciones IA' },
+    { name: 'InVideo AI', url: 'https://invideo.io', emoji: '📽️', cat: 'video', desc: 'Crea videos a partir de texto' },
+    { name: 'Pika Labs', url: 'https://pika.art', emoji: '⚡', cat: 'video', desc: 'Texto a video de alta calidad' },
+    { name: 'HeyGen', url: 'https://www.heygen.com', emoji: '👤', cat: 'video', desc: 'Avatares parlantes realistas' },
+    { name: 'Synthesia', url: 'https://www.synthesia.io', emoji: '🎞️', cat: 'video', desc: 'Videos con avatares profesionales' },
+    { name: 'FlexClip', url: 'https://www.flexclip.com', emoji: '📹', cat: 'video', desc: 'Editor de video online' },
+    { name: 'VEED.io', url: 'https://www.veed.io', emoji: '🎚️', cat: 'video', desc: 'Edición y subtítulos automáticos' },
+    { name: 'Animaker', url: 'https://www.animaker.com', emoji: '🎭', cat: 'video', desc: 'Crea videos animados' },
+    { name: 'MyEdit Video', url: 'https://myedit.com/video-editor', emoji: '🎬', cat: 'video', desc: 'Editor todo-en-uno' },
 
-      // ---------- DIRECTORIOS / REPOSITORIOS ----------
-      { name: 'Aifindy', url: 'https://aifindy.com', emoji: '📂', cat: 'dir' },
-      { name: 'AllThingsAI', url: 'https://allthingsai.com', emoji: '🤖', cat: 'dir' },
-      { name: 'Creatai', url: 'https://creatai.ai', emoji: '✨', cat: 'dir' },
-      { name: 'Futurepedia', url: 'https://www.futurepedia.io', emoji: '📅', cat: 'dir' },
-      { name: 'Future Tools', url: 'https://www.futuretools.io', emoji: '🔧', cat: 'dir' },
-      { name: 'Insidr.ai', url: 'https://insidr.ai', emoji: '📡', cat: 'dir' },
-      { name: 'Opentools', url: 'https://opentools.ai', emoji: '🔓', cat: 'dir' },
-      { name: 'The AI Library', url: 'https://theailibrary.com', emoji: '📘', cat: 'dir' },
-      { name: 'TAAFT', url: 'https://taaft.co', emoji: '🗂️', cat: 'dir' },
-      { name: 'LM Arena', url: 'https://lmarena.ai', emoji: '🏟️', cat: 'dir' }
-    ];
+    // Directorios
+    { name: 'Futurepedia', url: 'https://www.futurepedia.io', emoji: '📅', cat: 'dir', desc: 'Directorio enorme de herramientas IA' },
+    { name: 'Future Tools', url: 'https://www.futuretools.io', emoji: '🔧', cat: 'dir', desc: 'Buscador de herramientas por categoría' },
+    { name: 'TAAFT', url: 'https://taaft.co', emoji: '🗂️', cat: 'dir', desc: 'Más de 1500 herramientas IA' },
+    { name: 'Aifindy', url: 'https://aifindy.com', emoji: '📂', cat: 'dir', desc: 'Directorios curados por humanos' },
+    { name: 'AllThingsAI', url: 'https://allthingsai.com', emoji: '🤖', cat: 'dir', desc: 'Reviews y comparativas' },
+    { name: 'Insidr.ai', url: 'https://insidr.ai', emoji: '📡', cat: 'dir', desc: 'Comunidad y directorio de IA' },
+    { name: 'Opentools', url: 'https://opentools.ai', emoji: '🔓', cat: 'dir', desc: 'Herramientas open-source y gratuitas' },
+    { name: 'Creatai', url: 'https://creatai.ai', emoji: '✨', cat: 'dir', desc: 'IA para creadores' },
+    { name: 'The AI Library', url: 'https://theailibrary.com', emoji: '📘', cat: 'dir', desc: 'Biblioteca organizada de IAs' },
+    { name: 'LM Arena', url: 'https://lmarena.ai', emoji: '🏟️', cat: 'dir', desc: 'Comparativa de modelos de lenguaje' }
+  ];
 
-    // Lista de exclusión por si acaso
-    const excludeList = ['midjourney', 'dreamstudio', 'kling ai'];
+  // Estado global
+  let favorites = JSON.parse(localStorage.getItem('aiFavorites')) || [];
+  let currentCategory = 'all';
+  let searchTerm = '';
+  let showOnlyFavorites = false;
 
-    function renderGrid(categoryId, catCode) {
-      const container = document.getElementById(categoryId);
-      if (!container) return;
-      const filtered = tools.filter(t => t.cat === catCode && !excludeList.some(ex => t.name.toLowerCase().includes(ex)));
-      filtered.sort((a,b) => a.name.localeCompare(b.name));
-      
-      filtered.forEach(tool => {
-        const card = document.createElement('div');
-        card.className = 'card';
+  // Renderizar grid
+  function renderTools() {
+    const grid = document.getElementById('toolsGrid');
+    let filtered = tools;
 
-        const logoDiv = document.createElement('div');
-        logoDiv.className = 'logo';
-        logoDiv.innerHTML = `<span>${tool.emoji}</span>`;
-
-        const h3 = document.createElement('h3');
-        h3.innerText = tool.name;
-
-        const gratis = document.createElement('div');
-        gratis.className = 'gratis-tag';
-        gratis.innerText = 'gratuito';
-
-        const linkBtn = document.createElement('a');
-        linkBtn.href = tool.url;
-        linkBtn.target = '_blank';
-        linkBtn.rel = 'noopener';
-        linkBtn.className = 'btn';
-        linkBtn.innerText = 'Visitar';
-
-        card.appendChild(logoDiv);
-        card.appendChild(h3);
-        card.appendChild(gratis);
-        card.appendChild(linkBtn);
-        container.appendChild(card);
-      });
+    // Filtro por búsqueda
+    if (searchTerm) {
+      filtered = filtered.filter(t => 
+        t.name.toLowerCase().includes(searchTerm) || 
+        t.desc.toLowerCase().includes(searchTerm)
+      );
     }
 
-    // Renderizar todas las secciones
-    renderGrid('textGrid', 'text');
-    renderGrid('academicGrid', 'acad');
-    renderGrid('imageGrid', 'image');
-    renderGrid('audioGrid', 'audio');
-    renderGrid('videoGrid', 'video');
-    renderGrid('directoryGrid', 'dir');
-  })();
+    // Filtro por categoría
+    if (currentCategory !== 'all') {
+      filtered = filtered.filter(t => t.cat === currentCategory);
+    }
+
+    // Filtro favoritos
+    if (showOnlyFavorites) {
+      filtered = filtered.filter(t => favorites.includes(t.name));
+    }
+
+    // Ordenar: favoritos primero, luego alfabético
+    filtered.sort((a, b) => {
+      const aFav = favorites.includes(a.name);
+      const bFav = favorites.includes(b.name);
+      if (aFav && !bFav) return -1;
+      if (!aFav && bFav) return 1;
+      return a.name.localeCompare(b.name);
+    });
+
+    // Renderizar
+    grid.innerHTML = filtered.map(tool => `
+      <div class="card ${favorites.includes(tool.name) ? 'favorite' : ''}" onclick="openTool('${tool.url}')">
+        <div class="card-header">
+          <div class="logo">${tool.emoji}</div>
+          <button class="favorite-btn ${favorites.includes(tool.name) ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${tool.name}')">
+            ${favorites.includes(tool.name) ? '⭐' : '☆'}
+          </button>
+        </div>
+        <div class="card-body">
+          <h3>${tool.name}</h3>
+          <span class="category-tag ${tool.cat}">${getCategoryName(tool.cat)}</span>
+          <div class="tooltip">${tool.desc}</div>
+          <div class="stats">
+            <span>✨ Gratuito</span>
+            <span>⬆️ ${getUses(tool.cat)}</span>
+          </div>
+          <a href="${tool.url}" target="_blank" class="btn" onclick="event.stopPropagation()">Abrir herramienta</a>
+        </div>
+      </div>
+    `).join('');
+
+    // Actualizar contadores
+    document.getElementById('totalCount').textContent = filtered.length;
+    document.getElementById('favoriteCount').textContent = favorites.length;
+  }
+
+  // Utilidades
+  function getCategoryName(cat) {
+    const cats = { text: 'Texto', acad: 'Académica', image: 'Imagen', audio: 'Audio', video: 'Video', dir: 'Directorio' };
+    return cats[cat] || cat;
+  }
+
+  function getUses(cat) {
+    const uses = { text: '12k', acad: '8k', image: '15k', audio: '5k', video: '7k', dir: '3k' };
+    return uses[cat] || '5k';
+  }
+
+  // Acciones
+  function toggleFavorite(name) {
+    if (favorites.includes(name)) {
+      favorites = favorites.filter(f => f !== name);
+      showToast('⭐ Eliminado de favoritos');
+    } else {
+      favorites.push(name);
+      showToast('✨ Añadido a favoritos');
+    }
+    localStorage.setItem('aiFavorites', JSON.stringify(favorites));
+    renderTools();
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  function openTool(url) {
+    window.open(url, '_blank');
+  }
+
+  function filterTools() {
+    searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    renderTools();
+  }
+
+  function filterByCategory(cat) {
+    currentCategory = cat;
+    document.querySelectorAll('.chip').forEach((chip, i) => {
+      chip.classList.toggle('active', i === 0 ? cat === 'all' : chip.textContent.includes(getCategoryName(cat)));
+    });
+    renderTools();
+  }
+
+  function showFavorites() {
+    showOnlyFavorites = !showOnlyFavorites;
+    document.getElementById('favFilterBtn').classList.toggle('active', showOnlyFavorites);
+    renderTools();
+  }
+
+  function changeView(size) {
+    const grid = document.getElementById('toolsGrid');
+    grid.className = `grid ${size}`;
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('light-theme');
+  }
+
+  // Inicializar
+  window.onload = () => {
+    renderTools();
+    // Actualizar chip activo
+    document.querySelectorAll('.chip')[0].classList.add('active');
+  };
 </script>
 </body>
 </html>
